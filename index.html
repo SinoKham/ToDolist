@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой To-Do</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <h2>SinoDo</h2>
+            <nav>
+                <ul>
+                    <li><a href="#">Today</a></li>
+                    <li><a href="#">Inbox</a></li>
+                    <li><a href="#">Upcoming</a></li>
+                    <li><a href="#">Completed</a></li>
+                </ul>
+            </nav>
+            <!--Zagolovok for proektov-->
+            <h3>Проекты</h3>
+            <ul>
+                <li>Работа</li>
+                <li>Учеба</li>
+                <li>Дом</li>
+            </ul>
+        </aside>
+        <div class="main-area">
+            <header class="topbar">
+                <div class="top_search">
+                    <input type="search" placeholder="Поиск задач...">
+                </div>
+                <div class="topbar_filters">
+                    <button>Все</button>
+                    <button>Активные</button>
+                    <button>Завершенные</button>
+                    <select>
+                        <option>Все приоритеты</option>
+                        <option>Низкий</option>
+                        <option>Средний</option>
+                        <option>Высокий</option>
+                    </select>
+                    <select class="sort-select">
+                        <option>По дедлайну (сначала ближайшие)</option>
+                        <option>По дедлайну (сначала дальние)</option>
+                        <option>По приоритету (высокий → низкий)</option>
+                        <option>По приоритету (низкий → высокий)</option>
+                        <option>По дате добавления (новые → старые)</option>
+                        <option>По дате добавления (старые → новые)</option>
+                    </select>
+                </div>
+                <div class="topbar_actions">
+                    <button>+ Новая задача</button>
+                </div>
+            </header>
+            <main class="content">
+                <!--spisok zadach-->
+                <article class="task-card">
+                    <input type="checkbox">
+                    <div class="task-content">
+                        <h3>Название задачи</h3>
+                        <p>Описание</p>
+                        <span class="tag">Учеба</span>
+                        <time>2026-05-14</time>
+                    </div>
+                    <span class="priority high"></span>
+                    <img src="" alt="avatar">
+                </article>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
