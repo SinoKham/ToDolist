@@ -18,6 +18,8 @@ body {
     background-color: #ffffff;
     border-right: 1px solid #eaeaea;
     padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
 }
 .main-area{
     flex: 1;
@@ -221,7 +223,7 @@ body {
     cursor: pointer;
     outline: none;
     transition: border-color 0.2s;
-    appearance: none; /* убирает стандартную стрелку (не во всех браузерах) */
+    appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%236b7280" d="M6 8L1 3h10z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -276,6 +278,38 @@ body {
     z-index: 100;
     display: none;
 }
+.user-profile{
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.user-profile img{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #e5e7eb;
+}
+.user-profile .user-name{
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+}
+.user-profile .loader{
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e5e7eb;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+@keyframes spin{
+    to { transform: rotate(360deg);}
+}
+
 /*adaptive*/
 /*planshit*/
 @media (max-width: 1023px){
