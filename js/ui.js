@@ -37,3 +37,55 @@ function handleTaskClick(event){
         renderTasks();
     }
 }
+function openTaskForm(){
+    document.getElementById('overlay').style.display = 'block';
+    const container=document.querySelector('#task-form-container')
+    container.style.display='block';
+    const form=container.querySelector('#task-form');
+    form.reset();
+    const errors=container.querySelectorAll('.error-message');
+    errors.forEach(error=>error.textContent='');
+}
+
+function closeTaskForm(){
+    document.getElementById('overlay').style.display = 'none';
+    const container=document.querySelector('#task-form-container')
+    container.style.display='none';
+    const form=container.querySelector('#task-form');
+    form.reset();
+    const errors=container.querySelectorAll('.error-message');
+    errors.forEach(error=>error.textContent='');
+}
+function initUI(){
+    document.querySelector('.content').addEventListener('click', handleTaskClick);
+    const addBtn=document.querySelector('.topbar_actions button');
+    if (addBtn) addBtn.addEventListener('click', openTaskForm);
+    const fab=document.querySelector('.fab');
+    if (fab) fab.addEventListener('click', openTaskForm);
+    const cancelBtn=document.querySelector('#task-form button[type="button"]');
+    if (cancelBtn) cancelBtn.addEventListener('click', closeTaskForm);
+    const form=document.querySelector('#task-form');
+    if (form){
+        form.addEventListener('submit', handleFormSubmit);
+    }
+}
+function handleFormSubmit(event){
+    event.preventDefault()
+    const form=event.target;
+    const formData=new FormData(form)
+        const title=formData.get('title');
+        const description = formData.get('description');
+        const priority = formData.get('priority');
+        const deadline = formData.get('deadline');
+        const category = formData.get('category');
+    const taskData={
+        title: title,
+        description: description,
+        priority: priority,
+        deadline: deadline,
+        category: category
+    };
+    addTask(taskData);
+    closeTaskForm();
+    renderTasks();
+}

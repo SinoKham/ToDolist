@@ -309,6 +309,96 @@ body {
 @keyframes spin{
     to { transform: rotate(360deg);}
 }
+#task-form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    padding: 28px 32px;
+    width: 90%;
+    max-width: 520px;
+    z-index: 1000;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+#task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+#task-form input,
+#task-form select,
+#task-form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #f9fafb;
+}
+
+#task-form input:focus,
+#task-form select:focus,
+#task-form textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background-color: #fff;
+}
+#task-form input.error,
+#task-form select.error,
+#task-form textarea.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    min-height: 16px;
+    display: block;
+}
+#task-form button[type="submit"] {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#task-form button[type="submit"]:hover {
+    background-color: #2563eb;
+}
+
+#task-form button[type="button"] {
+    background-color: transparent;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#task-form button[type="button"]:hover {
+    background-color: #f3f4f6;
+}
 
 /*adaptive*/
 /*planshit*/

@@ -61,6 +61,32 @@
                 <!--spisok zadach-->
                 
             </main>
+            <div id="task-form-container" class="task-form-container" style="display: none;">
+                    <form id="task-form">
+                        <input type="text" name="title" placeholder="Название задачи">
+                        <span class="error-message" data-error="title"></span>
+                        <textarea name="description" placeholder="Описание (необязательно)"></textarea>
+                        <span class="error-message" data-error="description"></span>
+                        <select name="priority">
+                            <option value="">Выберите приоритет</option>
+                            <option>Низкий</option>
+                            <option>Средний</option>
+                            <option>Высокий</option>
+                        </select>
+                        <span class="error-message" data-error="priority"></span>
+                        <input type="datetime-local" name="deadline">
+                        <span class="error-message" data-error="deadline"></span>
+                        <select name="category">
+                            <option disabled>Выберите категорию</option>
+                            <option>Работа</option>
+                            <option>Учёба</option>
+                            <option>Дом</option>
+                        </select>
+                        <span class="error-message" data-error="category"></span>
+                        <button type="submit">Сохранить</button>
+                        <button type="button">Отмена</button>
+                    </form>
+                </div>
         </div>
     </div>
     <button class="fab">+</button>
@@ -68,5 +94,6 @@
     <script src="js/api.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/app.js"></script>
+    <div class="overlay" id="overlay" style="display: none;"></div>
 </body>
 </html>
