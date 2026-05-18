@@ -68,24 +68,23 @@ function initUI(){
     if (form){
         form.addEventListener('submit', handleFormSubmit);
     }
+    initFormValidation();
 }
 function handleFormSubmit(event){
+    console.log('Форма отправлена');
     event.preventDefault()
+    if (!validateForm()) return;
     const form=event.target;
     const formData=new FormData(form)
-        const title=formData.get('title');
-        const description = formData.get('description');
-        const priority = formData.get('priority');
-        const deadline = formData.get('deadline');
-        const category = formData.get('category');
-    const taskData={
-        title: title,
-        description: description,
-        priority: priority,
-        deadline: deadline,
-        category: category
+        const taskData = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        priority: formData.get('priority'),
+        deadline: formData.get('deadline'),
+        category: formData.get('category')
     };
     addTask(taskData);
     closeTaskForm();
     renderTasks();
+    
 }
