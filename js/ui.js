@@ -17,8 +17,23 @@ function renderTasks(){
                 </div>
                 <span class="priority ${task.priority}"></span>
                 <img src="" alt="avatar">
+                <button class="delete-btn">Удалить</button>
             </article>
             `).join('')
         render.innerHTML=html;
+    }
+}
+function handleTaskClick(event){
+    const taskCard=event.target.closest('.task-card');
+    if (!taskCard) return;
+    const taskId=taskCard.dataset.id;
+    if (event.target.closest('.delete-btn')){
+        deleteTask(taskId);
+        renderTasks();
+        return;
+    }    
+    if (event.target.type==='checkbox'){
+        updateTask(taskId, { completed: event.target.checked});
+        renderTasks();
     }
 }
