@@ -1,3 +1,4 @@
+let currentEditId=null;
 function getFiltered(){
     let tasks=getTasks();
     const searchTerm=document.querySelector('.top_search input[type="search"]').value.trim().toLowerCase();
@@ -86,10 +87,24 @@ function renderTasks(){
                 <span class="priority ${task.priority}"></span>
                 <img src="" alt="avatar">
                 <button class="delete-btn">Удалить</button>
+                <button class="edit-btn">✏️</button>
             </article>
             `).join('')
         render.innerHTML=html;
     }
+}
+function openEditForm(taskId){
+    const tasks=getTasks();
+    const task=tasks.find(task=>task.id===taskId);
+    if (!task) return;
+    currentEditId=taskId;
+    openTaskForm();
+    const form=document.getElementById('task-form');
+    form.querySelector('[name="title"]').value=task.title;
+    form.querySelector('[name="description"]').value=task.description || '';
+    form.querySelector('[name="priority"]').value=task.priority;
+    form.querySelector('[name="deadline"]').value=task.deadline ? task.deadline.slice(0, 16) : '';
+    form.querySelector('[name="category"]').value=task.category || '';
 }
 function handleTaskClick(event){
     const taskCard=event.target.closest('.task-card');
@@ -100,6 +115,10 @@ function handleTaskClick(event){
         renderTasks();
         return;
     }    
+    if (event.target.closest('.edit-btn')){
+        openEditForm(taskId);
+        return;
+    }
     if (event.target.type==='checkbox'){
         updateTask(taskId, { completed: event.target.checked});
         renderTasks();
@@ -115,6 +134,7 @@ function openTaskForm(){
     errors.forEach(error=>error.textContent='');
 }
 function closeTaskForm(){
+    currentEditId=null;
     document.getElementById('overlay').style.display = 'none';
     const container=document.querySelector('#task-form-container')
     container.style.display='none';
@@ -150,6 +170,8 @@ function initUI(){
     if(selCat)selCat.addEventListener('change', renderTasks);
     const selSearch=document.querySelector('.top_search input[type="search"]');
     if (selSearch) selSearch.addEventListener('input', renderTasks);
+    const closer=document.querySelector('#overlay');
+    if (closer) closer.addEventListener('click', closeTaskForm)
     renderTasks();
 }
 function handleFormSubmit(event){
@@ -164,8 +186,12 @@ function handleFormSubmit(event){
         deadline: formData.get('deadline'),
         category: formData.get('category')
     };
+    if (currentEditId) {
+    updateTask(currentEditId, taskData);
+    currentEditId = null;
+    } else {
     addTask(taskData);
+    }
     closeTaskForm();
-    renderTasks();
-    
+    renderTasks();  
 }
