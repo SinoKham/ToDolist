@@ -399,6 +399,9 @@ body {
 #task-form button[type="button"]:hover {
     background-color: #f3f4f6;
 }
+.task-card.deadline-green { border-left: 4px solid #22c55e;}
+.task-card.deadline-yellow { border-left: 4px solid #eab308; }
+.task-card.deadline-red { border-left: 4px solid #ef4444; }
 
 /*adaptive*/
 /*planshit*/

@@ -21,9 +21,51 @@ function getFiltered(){
     if(priorityValue && priorityValue!=='Все приоритеты'){
         tasks=tasks.filter(task=>task.priority===priorityValue)
     }
+    const sortSelect=document.querySelector('.topbar_filters select.sort-select');
+    if (sortSelect){
+        tasks=sortTasks(tasks, sortSelect.value);
+    }
     return tasks;
 }
-
+function sortTasks(tasks, sortValue){
+    const priorityMap ={ 'Высокий': 3, 'Средний': 2, 'Низкий': 1 };
+    switch (sortValue){
+        case 'По дедлайну (сначала ближайшие)':
+            return tasks.sort((a,b)=>{
+                const dataA=a.deadline ? new Date(a.deadline): new Date('9999-12-31');
+                const dateB=b.deadline ?new Date(b.deadline): new Date('9999-12-31');
+                return dataA-dateB;
+            });
+        case 'По дедлайну (сначала дальние)':
+            return tasks.sort((a,b)=>{
+                const dateA=a.deadline ? new Date(a.deadline): new Date('9999-12-31');
+                const dateB = b.deadline ? new Date(b.deadline) : new Date('9999-12-31');
+                return dateB-dateA;
+            });
+        case 'По приоритету (высокий → низкий)':
+            return tasks.sort((a,b)=>priorityMap[b.priority]-priorityMap[a.priority]);
+        case 'По приоритету (низкий → высокий)':
+            return tasks.sort((a, b) => priorityMap[a.priority] - priorityMap[b.priority]);
+        case 'По дате добавления (новые → старые)':
+            return tasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        case 'По дате добавления (старые → новые)':
+            return tasks.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        default:
+            return tasks;
+    }
+}
+function getDeadlineClass(task){
+    if (task.completed || !task.deadline) return '';
+    const now=new Date();
+    const deadlineDate=new Date(task.deadline);
+    const different= deadlineDate-now;
+    const diffHours=(deadlineDate-now)/(1000*60*60);
+    if (diffHours<0){
+        return 'deadline-red';
+    } else if (diffHours<=24){
+        return 'deadline-yellow';
+    } else return 'deadline-green';
+}
 function renderTasks(){
     const render=document.querySelector('.content');
     const tasks=getFiltered();
@@ -33,7 +75,7 @@ function renderTasks(){
         return;
     } else{
         const html= tasks.map(task=>`
-            <article class="task-card" data-id="${task.id}">
+            <article class="task-card ${getDeadlineClass(task)}" data-id="${task.id}">
                 <input type="checkbox" ${task.completed ? 'checked' : ''}>
                 <div class="task-content">
                     <h3>${task.title}</h3>
@@ -111,7 +153,6 @@ function initUI(){
     renderTasks();
 }
 function handleFormSubmit(event){
-    console.log('Форма отправлена');
     event.preventDefault()
     if (!validateForm()) return;
     const form=event.target;
