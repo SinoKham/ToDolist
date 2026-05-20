@@ -1,6 +1,32 @@
+function getFiltered(){
+    let tasks=getTasks();
+    const searchTerm=document.querySelector('.top_search input[type="search"]').value.trim().toLowerCase();
+    if (searchTerm){
+        tasks=tasks.filter(task=> {
+            return task.title.toLowerCase().includes(searchTerm) || 
+                (task.description && task.description.toLowerCase().includes(searchTerm)) ||
+                (task.category && task.category.toLowerCase().includes(searchTerm))});
+    }
+    const activeBtn=document.querySelector('.topbar_filters button.active')
+    if (activeBtn){
+        const statusText=activeBtn.textContent.trim();
+        if(statusText==='Активные'){
+            tasks=tasks.filter(task=> !task.completed);
+        } else if (statusText==='Завершённые'){
+            tasks=tasks.filter(task=>task.completed);
+        } 
+    }
+    const prioritySels=document.querySelector('.topbar_filters select:not(.sort-select)');
+    const priorityValue=prioritySels.value
+    if(priorityValue && priorityValue!=='Все приоритеты'){
+        tasks=tasks.filter(task=>task.priority===priorityValue)
+    }
+    return tasks;
+}
+
 function renderTasks(){
     const render=document.querySelector('.content');
-    const tasks=getTasks();
+    const tasks=getFiltered();
     render.innerHTML='';
     if (tasks.length===0) {
         render.innerHTML= '<p class="empty-state">Нет задач</p>';
@@ -46,7 +72,6 @@ function openTaskForm(){
     const errors=container.querySelectorAll('.error-message');
     errors.forEach(error=>error.textContent='');
 }
-
 function closeTaskForm(){
     document.getElementById('overlay').style.display = 'none';
     const container=document.querySelector('#task-form-container')
@@ -69,6 +94,21 @@ function initUI(){
         form.addEventListener('submit', handleFormSubmit);
     }
     initFormValidation();
+    const statusBut=document.querySelectorAll('.topbar_filters button');
+    statusBut.forEach(button => {
+        button.addEventListener('click', function(event){
+            statusBut.forEach(btn=>btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTasks();
+        });
+    });
+    const selPrior=document.querySelector('.topbar_filters select:not(.sort-select)')
+    if(selPrior) selPrior.addEventListener('change', renderTasks);
+    const selCat=document.querySelector('.topbar_filters select.sort-select');
+    if(selCat)selCat.addEventListener('change', renderTasks);
+    const selSearch=document.querySelector('.top_search input[type="search"]');
+    if (selSearch) selSearch.addEventListener('input', renderTasks);
+    renderTasks();
 }
 function handleFormSubmit(event){
     console.log('Форма отправлена');
