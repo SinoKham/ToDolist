@@ -2,10 +2,6 @@
 ![Интерфейс SinoDo](./screenshots/sinodoskr.png)
 Современное веб-приложение для управления задачами, вдохновлённое Microsoft To Do и другими productivity-инструментами. Полностью работает на чистом JavaScript, без фреймворков. Создано в учебных целях для глубокого понимания DOM, событий, асинхронных запросов и LocalStorage.
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-
 ## Как запустить
 Просто открой `index.html` в браузере - никаких серверов и зависимостей не требуется.
 
