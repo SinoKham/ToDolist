@@ -12,18 +12,18 @@
             <h2>SinoDo</h2>
             <nav>
                 <ul>
-                    <li><a href="#">Сегодня</a></li>
-                    <li><a href="#">Входящие</a></li>
-                    <li><a href="#">Предстоящие</a></li>
-                    <li><a href="#">Завершенные</a></li>
+                    <li><a href="#" class="sidebar-item" data-view="inbox">Входящие</a></li>
+                    <li><a href="#" class="sidebar-item" data-view="today">Сегодня</a></li>
+                    <li><a href="#" class="sidebar-item" data-view="upcoming">Предстоящие</a></li>
+                    <li><a href="#" class="sidebar-item" data-view="completed">Завершенные</a></li>
                 </ul>
             </nav>
             <!--Zagolovok for proektov-->
             <h3>Проекты</h3>
             <ul>
-                <li>Работа</li>
-                <li>Учеба</li>
-                <li>Дом</li>
+                <li class="sidebar-item" data-view="project" data-project="Работа">Работа</li>
+                <li class="sidebar-item" data-view="project" data-project="Учеба">Учеба</li>
+                <li class="sidebar-item" data-view="project" data-project="Дом">Дом</li>
             </ul>
             <div id="user-profile" class="user-profile">
 
@@ -79,7 +79,7 @@
                         <select name="category">
                             <option disabled>Выберите категорию</option>
                             <option>Работа</option>
-                            <option>Учёба</option>
+                            <option>Учеба</option>
                             <option>Дом</option>
                         </select>
                         <span class="error-message" data-error="category"></span>

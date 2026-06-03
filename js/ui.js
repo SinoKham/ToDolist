@@ -1,6 +1,24 @@
+let currentProject = null;
+let currentView = null;
 let currentEditId=null;
 function getFiltered(){
     let tasks=getTasks();
+    if (currentView==='today') {
+        const today=new Date().toDateString();
+        tasks=tasks.filter(task=>!task.completed&&task.deadline&&new Date(task.deadline).toDateString()===today);
+
+    } else if (currentView==='inbox') {
+        tasks=tasks.filter(task=>!task.completed);
+    } else if (currentView==='upcoming') {
+        const today=new Date();
+        today.setHours(23, 59, 59 , 999);
+        tasks=tasks.filter(task=>!task.completed&&task.deadline&&new Date(task.deadline)>today);
+    } else if (currentView==='completed'){
+        tasks=tasks.filter(task=>task.completed);
+
+    } else if (currentView==='project' && currentProject) {
+        tasks=tasks.filter(task=>task.category===currentProject);
+    }
     const searchTerm=document.querySelector('.top_search input[type="search"]').value.trim().toLowerCase();
     if (searchTerm){
         tasks=tasks.filter(task=> {
@@ -13,7 +31,7 @@ function getFiltered(){
         const statusText=activeBtn.textContent.trim();
         if(statusText==='Активные'){
             tasks=tasks.filter(task=> !task.completed);
-        } else if (statusText==='Завершённые'){
+        } else if (statusText==='Завершенные'){
             tasks=tasks.filter(task=>task.completed);
         } 
     }
@@ -82,11 +100,11 @@ function renderTasks(){
                     <h3>${task.title}</h3>
                     ${task.description ? `<p>${task.description}</p>` : ''}
                     <span class="tag">${task.category || 'Без категории'}</span>
-                    <time>${task.deadline || ''}</time>
+                    <time>${new Date(task.deadline).toLocaleString() || ''}</time>
                 </div>
                 <span class="priority ${task.priority}"></span>
-                <img src="" alt="avatar">
-                <button class="delete-btn">Удалить</button>
+               
+                <button class="delete-btn">Удалить 🗑️</button>
                 <button class="edit-btn">✏️</button>
             </article>
             `).join('')
@@ -171,7 +189,24 @@ function initUI(){
     const selSearch=document.querySelector('.top_search input[type="search"]');
     if (selSearch) selSearch.addEventListener('input', renderTasks);
     const closer=document.querySelector('#overlay');
-    if (closer) closer.addEventListener('click', closeTaskForm)
+    if (closer) closer.addEventListener('click', closeTaskForm);
+    const sidebarItems=document.querySelectorAll('.sidebar-item');
+    sidebarItems.forEach(item=> {
+        item.addEventListener('click', function(event){
+            const view=event.target.dataset.view;
+            const project=event.target.dataset.project || null;
+            document.querySelector('.top_search input[type="search"]').value='';
+            const statusButtons=document.querySelectorAll('.topbar_filters button');
+            statusButtons.forEach(btn=>btn.classList.remove('active'));
+            const prioritySelect=document.querySelector('.topbar_filters select:not(.sort-select)');
+            if (prioritySelect) prioritySelect.value='';
+            currentView=view;
+            currentProject=project;
+            sidebarItems.forEach(el=>el.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTasks();
+        })
+    })
     renderTasks();
 }
 function handleFormSubmit(event){

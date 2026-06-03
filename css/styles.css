@@ -48,6 +48,7 @@ body {
     align-items: flex-start;
     gap: 12px;
     transition: box-shadow 0.2s ease;
+    margin-bottom: 4px;
 }
 .task-card:hover{
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -339,6 +340,8 @@ body {
 #task-form input,
 #task-form select,
 #task-form textarea {
+    resize: vertical;
+    max-width: 100%;
     width: 100%;
     padding: 10px 14px;
     border: 1px solid #e5e7eb;

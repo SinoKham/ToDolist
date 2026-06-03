@@ -10,6 +10,9 @@ function validateField(name, value){
         }
     }
     if (name==='deadline'){
+        if (value.trim()!==''&&isNaN(new Date(value).getTime())) {
+            return 'Некорректная дата';
+        }
         if (value.length!==0 && new Date(value)<= new Date()){
             return 'Дедлайн должен быть в будущем';
         }
